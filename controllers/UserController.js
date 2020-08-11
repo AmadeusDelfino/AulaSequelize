@@ -4,7 +4,12 @@ module.exports = {
     getAllUsers: async (request, response) => {
         response.end(
             JSON.stringify(await users.findAll({
-                include: 'tasks',
+                include: [
+                    'tasks',
+                    'configuration',
+                    'cart',
+                ],
+
             }))
         )
     },
@@ -22,7 +27,7 @@ module.exports = {
 
         return response.end()
     },
-    deleteUser: async(request, response) => {
+    deleteUser: async (request, response) => {
         users.destroy({
             where: {
                 id: request.params.id

@@ -10,11 +10,26 @@ module.exports = (sequelize, DataTypes) => {
     })
 
     Users.associate = (models) => {
-        Users.hasMany(
-            models.tasks,
-            {as: 'tasks'}
-        )
+        Users.hasOne(models.configurations, {
+            as: 'configuration', foreignKey: 'userId'
+        })
+
+        Users.hasMany(models.tasks, {
+            foreignKey: 'userId', as: 'tasks'
+        })
+
+        Users.hasOne(models.carts, {
+            foreignKey: 'userId', as: 'cart'
+        })
     }
+
+
+    // Users.associate = (models) => {
+    //     Users.hasMany(
+    //         models.tasks,
+    //         {as: 'tasks'}
+    //     )
+    // }
 
     return Users
 }
